@@ -3,16 +3,16 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/Notification";
-import "./index.css";
+import CreateBlogForm from "./components/CreateBlogForm";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [title, setTitile] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
+  // const [title, setTitile] = useState("");
+  // const [author, setAuthor] = useState("");
+  // const [url, setUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
@@ -50,19 +50,11 @@ const App = () => {
     blogService.setToken(null);
   };
 
-  const handleCreateBlog = async (e) => {
-    e.preventDefault();
+  const addBlog = async (newNoteObject) => {
     try {
-      const returnedBlog = await blogService.createNewNote({
-        title,
-        author,
-        url,
-      });
+      const returnedBlog = await blogService.createNewNote(newNoteObject);
       console.log(returnedBlog);
       setBlogs(blogs.concat(returnedBlog));
-      setTitile("");
-      setAuthor("");
-      setUrl("");
       setSuccessMessage(
         `a new blog '${returnedBlog.title}' by ${returnedBlog.author} has been added`
       );
@@ -76,37 +68,6 @@ const App = () => {
       }, 5000);
     }
   };
-
-  const createBlogForm = () => (
-    <form onSubmit={handleCreateBlog}>
-      <h2>Add new note</h2>
-      <div>
-        <label>title</label>
-        <input
-          type="text"
-          value={title}
-          onChange={({ target }) => setTitile(target.value)}
-        ></input>
-      </div>
-      <div>
-        <label>author</label>
-        <input
-          type="text"
-          value={author}
-          onChange={({ target }) => setAuthor(target.value)}
-        ></input>
-      </div>
-      <div>
-        <label>url</label>
-        <input
-          type="text"
-          value={url}
-          onChange={({ target }) => setUrl(target.value)}
-        ></input>
-      </div>
-      <button type="submit">Add</button>
-    </form>
-  );
 
   if (user === null) {
     return (
@@ -143,7 +104,7 @@ const App = () => {
 
       <span>{user.name} logged in</span>
       <button onClick={handleLogout}>logout</button>
-      {createBlogForm()}
+      <CreateBlogForm addBlog={addBlog} />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
