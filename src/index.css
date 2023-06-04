@@ -16,3 +16,8 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+
+  p{
+    margin: 0;
+    padding: 0;
+  }
