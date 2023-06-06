@@ -1,17 +1,17 @@
-import { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useImperativeHandle } from 'react'
 
-const Togglable = forwardRef((props, refs) => {
+const Togglable = React.forwardRef((props, refs) => {
   //   const { show, setShow } = props;
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(true)
 
-  const showForm = { display: show ? "" : "none" };
-  const hideForm = { display: show ? "none" : "" };
+  const showForm = { display: show ? '' : 'none' }
+  const hideForm = { display: show ? 'none' : '' }
 
-  const toggleFormVisibility = () => setShow(!show);
+  const toggleFormVisibility = () => setShow(!show)
 
   useImperativeHandle(refs, () => {
-    return { toggleFormVisibility };
-  });
+    return { toggleFormVisibility }
+  })
   return (
     <div>
       <div style={showForm}>
@@ -22,7 +22,9 @@ const Togglable = forwardRef((props, refs) => {
         <button onClick={toggleFormVisibility}>cancel</button>
       </div>
     </div>
-  );
-});
+  )
+})
 
-export default Togglable;
+Togglable.displayName = 'Togglable'
+
+export default Togglable

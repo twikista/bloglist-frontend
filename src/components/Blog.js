@@ -1,10 +1,9 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
   const [viewAll, setViewAll] = useState(false);
   const { user, title, author, url, likes } = blog;
-  // const [shouldDelete, setShouldDelete] = useState(false)
-  console.log(user, activeUser);
 
   const toggleView = () => setViewAll(!viewAll);
   const updateLike = (updatedBlogObject, blogId) => {
@@ -41,7 +40,6 @@ const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
       )}
     </div>
   );
-  // console.log(blog.id);
 
   const blogStyle = {
     paddingTop: 10,
@@ -62,3 +60,10 @@ const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
 };
 
 export default Blog;
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  updateBlog: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+};
