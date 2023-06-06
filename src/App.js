@@ -16,7 +16,7 @@ const App = () => {
 
   const blogRef = useRef();
   // const [show, setShow] = useState(true);
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -83,7 +83,7 @@ const App = () => {
         updatedBlogObject,
         blogId
       );
-      console.log(returnedBlog);
+      // console.log(returnedBlog);
       const activeUser = {
         id: returnedBlog.user,
         username: user.username,
@@ -94,8 +94,18 @@ const App = () => {
           ? { ...returnedBlog, user: activeUser }
           : blog;
       });
-      console.log(updatedBlogs);
+      // console.log(updatedBlogs);
       setBlogs(updatedBlogs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (blogId) => {
+    try {
+      await blogService.deleteBlog(blogId);
+      const updateBlogs = blogs.filter((blog) => blog.id !== blogId);
+      setBlogs(updateBlogs);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +117,7 @@ const App = () => {
     </Togglable>
   );
 
-  console.log(blogs);
+  // console.log(blogs);
 
   if (user === null) {
     return (
@@ -145,9 +155,17 @@ const App = () => {
       <span>{user.name} logged in</span>
       <button onClick={handleLogout}>logout</button>
       {createBlogForm()}
-      {blogs.map((blog, index) => (
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} index={index} />
-      ))}
+      {[...blogs]
+        .sort((a, b) => a.likes - b.likes)
+        .map((blog, index) => (
+          <Blog
+            key={blog.id}
+            blog={blog}
+            updateBlog={updateBlog}
+            handleDelete={handleDelete}
+            user={user}
+          />
+        ))}
     </div>
   );
 };

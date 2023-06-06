@@ -1,13 +1,22 @@
 import { useState } from "react";
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
   const [viewAll, setViewAll] = useState(false);
   const { user, title, author, url, likes } = blog;
+  // const [shouldDelete, setShouldDelete] = useState(false)
+  console.log(user, activeUser);
 
   const toggleView = () => setViewAll(!viewAll);
   const updateLike = (updatedBlogObject, blogId) => {
     console.log(blogId);
     updateBlog(updatedBlogObject, blogId);
+  };
+
+  const deleteBlog = (blogId) => {
+    const confirmDelete = window.confirm(`remove blog ${title} by ${author}?`);
+    if (confirmDelete) {
+      handleDelete(blogId);
+    } else return;
   };
 
   const otherDetails = () => (
@@ -27,6 +36,9 @@ const Blog = ({ blog, updateBlog }) => {
         </button>
       </p>
       <p>{blog.user.name}</p>
+      {activeUser.id === user.id && (
+        <button onClick={() => deleteBlog(blog.id)}>remove</button>
+      )}
     </div>
   );
   // console.log(blog.id);
