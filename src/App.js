@@ -20,9 +20,9 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const rawUser = window.localStorage.getItem('loginCredentials')
-    if (rawUser) {
-      const user = JSON.parse(rawUser)
+    const activeUser = window.localStorage.getItem('loginCredentials')
+    if (activeUser) {
+      const user = JSON.parse(activeUser)
       setUser(user)
       blogService.setToken(user.token)
     }
