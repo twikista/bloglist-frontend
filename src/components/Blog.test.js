@@ -79,18 +79,51 @@ describe('<Blog/>', () => {
 
     expect(updateBlog).toHaveBeenCalledTimes(2)
   })
+})
 
-  test('call onSubmit with the right values filled into input', async () => {
-    const addBlog = jest.fn()
+describe('<CreateBlogForm/>', () => {
+  const addBlog = jest.fn()
+  beforeEach(() => {
     render(<CreateBlogForm addBlog={addBlog} />)
+  })
 
-    const inputs = screen.getAllByRole('textbox')
-    userEvent.type(inputs[0], 'How to learn React')
-    userEvent.type(inputs[1], 'Net ninja')
-    userEvent.type(inputs[2], 'hhtp://netninja.io')
+  test('input values are updated correctly', async () => {
+    const [titleInput, authorInput, urlInput] = screen.getAllByRole('textbox')
+
+    userEvent.type(titleInput, 'How to learn React')
+    userEvent.type(authorInput, 'Net ninja')
+    userEvent.type(urlInput, 'http://netninja.io')
+
+    expect(titleInput.value).toBe('How to learn React')
+    expect(authorInput.value).toBe('Net ninja')
+    expect(urlInput.value).toBe('http://netninja.io')
+  })
+
+  test('calls onSubmit on click of add button', async () => {
+    const addbutton = screen.getByText('Add')
+    userEvent.click(addbutton)
+
+    expect(addBlog).toHaveBeenCalledTimes(1)
+  })
+
+  test('calls onSubmit with the right input values', async () => {
+    const titleInput = screen.getByPlaceholderText('enter blog title')
+    const authorInput = screen.getByPlaceholderText('enter blog author')
+    const urlInput = screen.getByPlaceholderText('enter blog url')
+
+    userEvent.type(titleInput, 'How to learn React')
+    userEvent.type(authorInput, 'Net ninja')
+    userEvent.type(urlInput, 'http://netninja.io')
+
+    const blog = {
+      title: 'How to learn React',
+      author: 'Net ninja',
+      url: 'http://netninja.io',
+    }
 
     const addbutton = screen.getByText('Add')
-
     userEvent.click(addbutton)
+
+    expect(addBlog.mock.calls[0][0]).toEqual(blog)
   })
 })
