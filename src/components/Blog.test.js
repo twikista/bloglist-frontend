@@ -24,16 +24,29 @@ describe('<Blog/>', () => {
     name: 'Matti Luukkainen',
   }
 
+  const updateBlog = jest.fn()
+  const deleteBlog = jest.fn()
+
+  let container
+
+  beforeEach(() => {
+    container = render(
+      <Blog
+        blog={blog}
+        hendleDelete={deleteBlog}
+        user={activeUser}
+        updateBlog={updateBlog}
+      />
+    ).container
+  })
+
   test('render blog title and author by default', () => {
-    const { container } = render(<Blog blog={blog} />)
-    // screen.debug()
     const span = container.querySelector('.basic-details')
 
     expect(span).toHaveTextContent('testing react app by Acadamind')
   })
 
   test('does not render blog url and likes by defult', () => {
-    render(<Blog blog={blog} />)
     const urlElement = screen.queryByText('https://www.acadamind.io')
     const likeElement = screen.queryByText(3)
 
@@ -42,11 +55,6 @@ describe('<Blog/>', () => {
   })
 
   test('show blog url and likes on click of view button', async () => {
-    // const user = userEvent.setup()
-    const deleteBlog = jest.fn()
-    const { container } = render(
-      <Blog blog={blog} deleteBlog={deleteBlog} user={activeUser} />
-    )
     const viewButton = screen.getByText('view')
     userEvent.click(viewButton)
 
@@ -58,16 +66,6 @@ describe('<Blog/>', () => {
   })
 
   test('calls like button handler twice if like button is clicked twice', () => {
-    const updateBlog = jest.fn()
-    const deleteBlog = jest.fn()
-    render(
-      <Blog
-        blog={blog}
-        hendleDelete={deleteBlog}
-        user={activeUser}
-        updateBlog={updateBlog}
-      />
-    )
     /*click view button to expand blog */
     const viewButton = screen.getByText('view')
     userEvent.click(viewButton)
