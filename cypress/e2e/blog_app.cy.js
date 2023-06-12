@@ -23,5 +23,11 @@ describe('Blog app', function () {
 
       cy.contains('Rossi Miguel logged in')
     })
+
+    it('fails with wrong credentials', function () {
+      cy.get('#username').type('mamakoko')
+      cy.get('#password').type('abcdef')
+      cy.contains('login').click()
+    })
   })
 })
