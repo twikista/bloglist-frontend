@@ -108,9 +108,9 @@ const App = () => {
     </Togglable>
   )
 
-  if (user === null) {
-    return <LoginForm handleLogin={handleLogin} />
-  }
+  // if (user === null) {
+  //   return <LoginForm handleLogin={handleLogin} />
+  // }
 
   return (
     <div>
@@ -119,21 +119,26 @@ const App = () => {
         message={errorMessage ? errorMessage : successMessage}
         messageType={errorMessage ? 'error' : 'success'}
       />
-
-      <span>{user.name} logged in</span>
-      <button onClick={handleLogout}>logout</button>
-      {createBlogForm()}
-      {[...blogs]
-        .sort((a, b) => a.likes - b.likes)
-        .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            updateBlog={updateBlog}
-            handleDelete={handleDelete}
-            user={user}
-          />
-        ))}
+      {user === null ? (
+        <LoginForm handleLogin={handleLogin} />
+      ) : (
+        <>
+          <span>{user.name} logged in</span>
+          <button onClick={handleLogout}>logout</button>
+          {createBlogForm()}
+          {[...blogs]
+            .sort((a, b) => a.likes - b.likes)
+            .map((blog) => (
+              <Blog
+                key={blog.id}
+                blog={blog}
+                updateBlog={updateBlog}
+                handleDelete={handleDelete}
+                user={user}
+              />
+            ))}
+        </>
+      )}
     </div>
   )
 }
