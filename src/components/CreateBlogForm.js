@@ -7,6 +7,7 @@ const CreateBlogForm = ({ addBlog }) => {
   const [url, setUrl] = useState('')
 
   const createBlog = (e) => {
+    console.log('got called')
     e.preventDefault()
     addBlog({ title, author, url })
     setTitile('')
@@ -23,6 +24,7 @@ const CreateBlogForm = ({ addBlog }) => {
           value={title}
           onChange={({ target }) => setTitile(target.value)}
           placeholder='enter blog title'
+          id='title'
         />
       </div>
       <div>
@@ -32,6 +34,7 @@ const CreateBlogForm = ({ addBlog }) => {
           value={author}
           onChange={({ target }) => setAuthor(target.value)}
           placeholder='enter blog author'
+          id='author'
         />
       </div>
       <div>
@@ -41,9 +44,12 @@ const CreateBlogForm = ({ addBlog }) => {
           value={url}
           onChange={({ target }) => setUrl(target.value)}
           placeholder='enter blog url'
+          id='url'
         />
       </div>
-      <button type='submit'>Add</button>
+      <button type='submit' id='submit'>
+        Add
+      </button>
     </form>
   )
 }

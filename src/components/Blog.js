@@ -30,6 +30,7 @@ const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
               blog.id
             )
           }
+          id='like-button'
         >
           like
         </button>

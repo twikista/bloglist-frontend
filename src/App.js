@@ -35,7 +35,10 @@ const App = () => {
       window.localStorage.setItem('loginCredentials', JSON.stringify(user))
       setUser(user)
     } catch (error) {
-      console.log(error)
+      setErrorMessage('wrong username or password')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -63,10 +66,7 @@ const App = () => {
         setSuccessMessage(null)
       }, 5000)
     } catch (error) {
-      setErrorMessage('wrong username or password')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      console.log(error)
     }
   }
 
@@ -114,7 +114,6 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
       <Notification
         message={errorMessage ? errorMessage : successMessage}
         messageType={errorMessage ? 'error' : 'success'}
@@ -123,20 +122,23 @@ const App = () => {
         <LoginForm handleLogin={handleLogin} />
       ) : (
         <>
+          <h2>blogs</h2>
           <span>{user.name} logged in</span>
           <button onClick={handleLogout}>logout</button>
           {createBlogForm()}
-          {[...blogs]
-            .sort((a, b) => a.likes - b.likes)
-            .map((blog) => (
-              <Blog
-                key={blog.id}
-                blog={blog}
-                updateBlog={updateBlog}
-                handleDelete={handleDelete}
-                user={user}
-              />
-            ))}
+          <div className='blogs'>
+            {[...blogs]
+              .sort((a, b) => b.likes - a.likes)
+              .map((blog) => (
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  updateBlog={updateBlog}
+                  handleDelete={handleDelete}
+                  user={user}
+                />
+              ))}
+          </div>
         </>
       )}
     </div>
