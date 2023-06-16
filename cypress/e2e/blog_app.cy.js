@@ -92,7 +92,7 @@ describe('Blog app', function () {
       })
     })
 
-    describe('and several notes exists', function () {
+    describe('and several blogs exists', function () {
       beforeEach(function () {
         cy.createBlog({
           title: 'Software Testing',
