@@ -1,4 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import {
+  displayNotification,
+  removeNotification,
+} from './features/notification/notification'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -8,10 +13,10 @@ import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 
 const App = () => {
+  const dispatch = useDispatch()
+
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
 
   const blogRef = useRef()
 
@@ -35,9 +40,14 @@ const App = () => {
       window.localStorage.setItem('loginCredentials', JSON.stringify(user))
       setUser(user)
     } catch (error) {
-      setErrorMessage('wrong username or password')
+      dispatch(
+        displayNotification({
+          text: 'wrong username or password',
+          variant: 'error',
+        })
+      )
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatch(removeNotification())
       }, 5000)
     }
   }
@@ -59,11 +69,14 @@ const App = () => {
         name: user.name,
       }
       setBlogs(blogs.concat({ ...returnedBlog, user: blogCreator }))
-      setSuccessMessage(
-        `a new blog '${returnedBlog.title}' by ${returnedBlog.author} has been added`
+      dispatch(
+        displayNotification({
+          text: `a new blog '${returnedBlog.title}' by ${returnedBlog.author} has been added`,
+          variant: 'success',
+        })
       )
       setTimeout(() => {
-        setSuccessMessage(null)
+        dispatch(removeNotification())
       }, 5000)
     } catch (error) {
       console.log(error)
@@ -108,16 +121,9 @@ const App = () => {
     </Togglable>
   )
 
-  // if (user === null) {
-  //   return <LoginForm handleLogin={handleLogin} />
-  // }
-
   return (
     <div>
-      <Notification
-        message={errorMessage ? errorMessage : successMessage}
-        messageType={errorMessage ? 'error' : 'success'}
-      />
+      <Notification />
       {user === null ? (
         <LoginForm handleLogin={handleLogin} />
       ) : (
