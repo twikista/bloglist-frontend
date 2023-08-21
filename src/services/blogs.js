@@ -17,14 +17,14 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
-const createNewNote = async (newNoteObject) => {
+const createNewBlog = async (newNoteObject) => {
   const config = setConfig()
 
   const response = await axios.post(baseUrl, newNoteObject, config)
   return response.data
 }
 
-const updateBlog = async (updatedBlogObject, blogId) => {
+const updateBlog = async (blogId, updatedBlogObject) => {
   const config = setConfig()
   const response = await axios.put(
     `${baseUrl}/${blogId}`,
@@ -39,4 +39,4 @@ const deleteBlog = async (blogId) => {
   await axios.delete(`${baseUrl}/${blogId}`, config)
 }
 
-export default { getAll, setToken, createNewNote, updateBlog, deleteBlog }
+export default { getAll, setToken, createNewBlog, updateBlog, deleteBlog }
