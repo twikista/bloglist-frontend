@@ -1,20 +1,29 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteBlog, updateBlog } from '../features/blog/blogThunk'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
+const Blog = ({ blog }) => {
+  const { user: activeUser } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+
   const [viewAll, setViewAll] = useState(false)
-  const { user, title, author, url, likes } = blog
+  const { user, title, author, url, likes, id } = blog
 
   const toggleView = () => setViewAll(!viewAll)
-  const updateLike = (updatedBlogObject, blogId) => {
-    console.log(blogId)
-    updateBlog(updatedBlogObject, blogId)
+
+  const updateLike = (blogId, updatedBlogObject) => {
+    // console.log(blogId)
+    // console.log(updatedBlogObject)
+    dispatch(updateBlog({ blogId, updatedBlogObject, user }))
+    // updateBlog(updatedBlogObject, blogId)
   }
 
-  const deleteBlog = (blogId) => {
+  const handleDelete = (blogId) => {
     const confirmDelete = window.confirm(`remove blog ${title} by ${author}?`)
     if (confirmDelete) {
-      handleDelete(blogId)
+      dispatch(deleteBlog(blogId))
+      // handleDelete(blogId)
     } else return
   }
 
@@ -25,10 +34,14 @@ const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
         likes {blog.likes}{' '}
         <button
           onClick={() =>
-            updateLike(
-              { user: user.id, likes: likes + 1, title, author, url },
-              blog.id
-            )
+            updateLike(blog.id, {
+              user: activeUser.id,
+              likes: likes + 1,
+              title,
+              author,
+              url,
+              id,
+            })
           }
           id='like-button'
         >
@@ -37,7 +50,7 @@ const Blog = ({ blog, updateBlog, handleDelete, user: activeUser }) => {
       </p>
       <p>{blog.user.name}</p>
       {activeUser.id === user.id && (
-        <button onClick={() => deleteBlog(blog.id)}>remove</button>
+        <button onClick={() => handleDelete(blog.id)}>remove</button>
       )}
     </div>
   )
