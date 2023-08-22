@@ -16,7 +16,7 @@ const Header = () => {
     <header>
       <nav style={{ display: 'flex', gap: '5px' }}>
         <NavLink to='/'>blogs</NavLink>
-        <NavLink to='/user'>users</NavLink>
+        <NavLink to='/users'>users</NavLink>
         <span>{user.name} logged in</span>
         <button onClick={handleLogout}>logout</button>
       </nav>

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers } from '../features/users/userThunk'
+import UserItem from './UserItem'
 
 const Users = () => {
   const { isLoading, users } = useSelector((state) => {
@@ -33,13 +34,7 @@ const Users = () => {
         </thead>
         <tbody>
           {loading()}
-          {users &&
-            users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.blogs.length}</td>
-              </tr>
-            ))}
+          {users && users.map((user) => <UserItem key={user.id} user={user} />)}
         </tbody>
       </table>
     </div>

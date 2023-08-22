@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getBlogs } from '../features/blog/blogThunk'
-import Blog from './Blog'
+import BlogItem from './BlogItem'
 import CreateBlogForm from './CreateBlogForm'
 
 const Blogs = ({ blogRef }) => {
@@ -21,7 +21,8 @@ const Blogs = ({ blogRef }) => {
     <>
       <CreateBlogForm blogRef={blogRef} />
       <div className='blogs'>
-        {blogs && [...blogs].map((blog) => <Blog key={blog.id} blog={blog} />)}
+        {blogs &&
+          [...blogs].map((blog) => <BlogItem key={blog.id} blog={blog} />)}
       </div>
     </>
   )
