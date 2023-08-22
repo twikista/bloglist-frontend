@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { login } from '../features/auth/authThunk'
 import {
@@ -17,13 +16,10 @@ const LoginForm = () => {
   const handleLogin = async (credentials) => {
     try {
       const user = await dispatch(login(credentials)).unwrap()
-      // const user = await loginService.login(credentials)
       if (user) {
         window.localStorage.setItem('user', JSON.stringify(user))
         blogService.setToken(user.token)
       }
-
-      // setUser(user)
     } catch (error) {
       console.log(error)
       dispatch(
@@ -72,7 +68,3 @@ const LoginForm = () => {
 }
 
 export default LoginForm
-
-// LoginForm.propTypes = {
-//   handleLogin: PropTypes.func.isRequired,
-// }

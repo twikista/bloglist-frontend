@@ -14,8 +14,10 @@ const Header = () => {
   return (
     <header>
       <h2>blogs</h2>
-      <span>{user.name} logged in</span>
-      <button onClick={handleLogout}>logout</button>
+      <h4>{user.name} logged in</h4>
+      <div>
+        <button onClick={handleLogout}>logout</button>
+      </div>
     </header>
   )
 }

@@ -13,17 +13,13 @@ const Blog = ({ blog }) => {
   const toggleView = () => setViewAll(!viewAll)
 
   const updateLike = (blogId, updatedBlogObject) => {
-    // console.log(blogId)
-    // console.log(updatedBlogObject)
     dispatch(updateBlog({ blogId, updatedBlogObject, user }))
-    // updateBlog(updatedBlogObject, blogId)
   }
 
   const handleDelete = (blogId) => {
     const confirmDelete = window.confirm(`remove blog ${title} by ${author}?`)
     if (confirmDelete) {
       dispatch(deleteBlog(blogId))
-      // handleDelete(blogId)
     } else return
   }
 
@@ -31,22 +27,24 @@ const Blog = ({ blog }) => {
     <div>
       <p className='blog-url'>{blog.url}</p>
       <p className='blog-likes'>
-        likes {blog.likes}{' '}
-        <button
-          onClick={() =>
-            updateLike(blog.id, {
-              user: activeUser.id,
-              likes: likes + 1,
-              title,
-              author,
-              url,
-              id,
-            })
-          }
-          id='like-button'
-        >
-          like
-        </button>
+        likes {blog.likes}
+        {activeUser.id === user.id && (
+          <button
+            onClick={() =>
+              updateLike(blog.id, {
+                user: activeUser.id,
+                likes: likes + 1,
+                title,
+                author,
+                url,
+                id,
+              })
+            }
+            id='like-button'
+          >
+            like
+          </button>
+        )}
       </p>
       <p>{blog.user.name}</p>
       {activeUser.id === user.id && (
@@ -77,7 +75,4 @@ export default Blog
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  // updateBlog: PropTypes.func.isRequired,
-  // handleDelete: PropTypes.func.isRequired,
-  // user: PropTypes.object.isRequired,
 }

@@ -1,34 +1,45 @@
-import { useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { Routes, Route } from 'react-router-dom'
+import { useRef } from 'react'
+import { useSelector } from 'react-redux'
 import Notification from './components/Notification'
-import CreateBlogForm from './components/CreateBlogForm'
+// import CreateBlogForm from './components/CreateBlogForm'
 import LoginForm from './components/LoginForm'
-import { getBlogs } from './features/blog/blogThunk'
+// import { getBlogs } from './features/blog/blogThunk'
 import Blogs from './components/Blogs'
 import Header from './components/Header'
+import Users from './components/Users'
 
 const App = () => {
-  const { user } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
+  const { user: loggedInUser } = useSelector((state) => state.auth)
+  // const dispatch = useDispatch()
   const blogRef = useRef()
 
-  useEffect(() => {
-    dispatch(getBlogs())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(getBlogs())
+  // }, [])
 
   return (
-    <div>
+    <>
       <Notification />
-      {user === null ? (
+      <Header />
+      <Routes>
+        <Route
+          path='/'
+          element={
+            loggedInUser === null ? <LoginForm /> : <Blogs blogRef={blogRef} />
+          }
+        />
+        <Route path='users' element={<Users />} />
+      </Routes>
+
+      {/* {user === null ? (
         <LoginForm />
       ) : (
         <>
-          <Header />
-          <CreateBlogForm blogRef={blogRef} />
-          <Blogs />
+          <Blogs blogRef={blogRef} />
         </>
-      )}
-    </div>
+      )} */}
+    </>
   )
 }
 

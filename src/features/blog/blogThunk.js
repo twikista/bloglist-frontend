@@ -36,7 +36,7 @@ export const deleteBlog = createAsyncThunk(
 
 export const updateBlog = createAsyncThunk(
   'blogs/updateblog',
-  async ({ blogId, updatedBlogObject, user }) => {
+  async ({ blogId, updatedBlogObject, user }, thunkAPI) => {
     try {
       const returnedObject = await blogServices.updateBlog(
         blogId,
@@ -45,6 +45,7 @@ export const updateBlog = createAsyncThunk(
       return { returnedObject, user }
     } catch (error) {
       console.log(error)
+      thunkAPI.rejectWithValue(error.response.data)
     }
   }
 )

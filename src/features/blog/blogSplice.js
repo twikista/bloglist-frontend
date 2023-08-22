@@ -35,11 +35,15 @@ const blogSplice = createSlice({
       state.blogs = state.blogs.filter((blog) => blog.id !== action.payload)
     },
     [updateBlog.fulfilled]: (state, action) => {
+      // console.log(action.payload)
       const { returnedObject, user } = action.payload
       state.blogs = state.blogs.map((blog) =>
         blog.id !== returnedObject.id ? blog : { ...returnedObject, user: user }
       )
     },
+    // [updateBlog.rejected]: (state, action) => {
+    //   // console.log(action)
+    // },
   },
 })
 
