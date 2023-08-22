@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { logout } from '../features/auth/authSlice'
 import blogService from '../services/blogs'
 
@@ -13,11 +14,13 @@ const Header = () => {
   }
   return (
     <header>
-      <h2>blogs</h2>
-      <h4>{user.name} logged in</h4>
-      <div>
+      <nav style={{ display: 'flex', gap: '5px' }}>
+        <NavLink to='/'>blogs</NavLink>
+        <NavLink to='/user'>users</NavLink>
+        <span>{user.name} logged in</span>
         <button onClick={handleLogout}>logout</button>
-      </div>
+      </nav>
+      <h2>blogs</h2>
     </header>
   )
 }
