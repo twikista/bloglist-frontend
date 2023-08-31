@@ -1,19 +1,12 @@
-// import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import Table from 'react-bootstrap/Table'
-// import { getBlogs } from '../features/blog/blogThunk'
-import BlogItem from './BlogItem'
-import CreateBlogForm from './CreateBlogForm'
-import Notification from './Notification'
+import BlogItem from '../components/BlogItem'
+import CreateBlogForm from '../components/CreateBlogForm'
+import Notification from '../components/Notification'
 
 const Blogs = ({ blogRef }) => {
   const { isLoading, blogs } = useSelector((state) => state.blogs)
-  // const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(getBlogs())
-  // }, [])
 
   if (isLoading) {
     return (

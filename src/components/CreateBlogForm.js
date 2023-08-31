@@ -16,12 +16,6 @@ const CreateBlogForm = ({ blogRef }) => {
   const [title, setTitile] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  // const [formData, setFormData] = useState({ title: '', author: '', url: '' })
-
-  // const onChangeHandler = (e) => {
-  //   const { name, value } = e.target
-  //   setFormData({ ...formData, [name]: value })
-  // }
 
   const createBlog = async (newBlogObject) => {
     try {
@@ -59,14 +53,12 @@ const CreateBlogForm = ({ blogRef }) => {
 
   const handleSubmit = (e) => {
     console.log('got called')
-    // console.log(formData)
     e.preventDefault()
     console.log(title, author, url)
     createBlog({ title, author, url })
     setTitile('')
     setAuthor('')
     setUrl('')
-    // setFormData({ title: '', author: '', url: '' })
   }
   return (
     <Togglable ref={blogRef} label='new blog'>
@@ -105,43 +97,11 @@ const CreateBlogForm = ({ blogRef }) => {
             }}
           />
         </Form.Group>
-        {/* <div>
-          <label>title</label>
-          <input
-            type='text'
-            value={title}
-            onChange={({ target }) => setTitile(target.value)}
-            placeholder='enter blog title'
-            id='title'
-          />
-        </div>
-        <div>
-          <label>author</label>
-          <input
-            type='text'
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-            placeholder='enter blog author'
-            id='author'
-          />
-        </div>
-        <div>
-          <label>url</label>
-          <input
-            type='text'
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
-            placeholder='enter blog url'
-            id='url'
-          />
-        </div> */}
         <Button
           className='small-table'
           variant='success'
-          // size='sm'
           type='submit'
           id='submit'
-          // style={{ width: '100%', maxWidth: '520px' }}
         >
           Add
         </Button>

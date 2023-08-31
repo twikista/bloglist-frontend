@@ -2,7 +2,6 @@ import React, { useState, useImperativeHandle } from 'react'
 import Button from 'react-bootstrap/Button'
 
 const Togglable = React.forwardRef((props, refs) => {
-  //   const { show, setShow } = props;
   const [show, setShow] = useState(true)
 
   const showForm = { display: show ? '' : 'none' }
@@ -30,7 +29,6 @@ const Togglable = React.forwardRef((props, refs) => {
         <Button
           className='small-table mt-3'
           variant='primary'
-          // size='sm'
           onClick={toggleFormVisibility}
         >
           cancel

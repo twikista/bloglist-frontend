@@ -44,16 +44,6 @@ const Header = () => {
         </Nav>
       </Container>
     </Navbar>
-    // <header style={{ padding: '20px 0' }}>
-    //   <nav style={{ display: 'flex', gap: '5px' }}>
-    //     <NavLink to='/'>blogs</NavLink>
-    //     <NavLink to='/users'>users</NavLink>
-    //     {user && <span>{user.name} logged in</span>}
-    //     <Button variant='outline-primary' size='sm' onClick={handleLogout}>
-    //       logout
-    //     </Button>
-    //   </nav>
-    // </header>
   )
 }
 

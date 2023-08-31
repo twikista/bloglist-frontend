@@ -6,7 +6,6 @@ const Notification = () => {
   if (!text) {
     return null
   }
-  // return <div className={variant}>{text}</div>
   return (
     <Alert className='small-table mb-3' variant={variant}>
       {text}

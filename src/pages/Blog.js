@@ -1,12 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  // getSingleBlog,
-  updateBlog,
-  deleteBlog,
-  addComment,
-} from '../features/blog/blogThunk'
+import { updateBlog, deleteBlog, addComment } from '../features/blog/blogThunk'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -16,8 +11,6 @@ import {
   toggleModal,
 } from '../features/notification/notification'
 import AppModal from '../components/Modal'
-// import PropTypes from 'prop-types'
-// import blogService from '../services/blogs'
 
 const Blog = () => {
   const dispatch = useDispatch()
@@ -27,10 +20,8 @@ const Blog = () => {
   // const { modal } = useSelector((state) => state.notification)
   const params = useParams()
   const blog = blogs.find((blog) => blog.id === params.id)
-  // const { user, comments, likes, title, author, url, id } = blog
   const commentIds = blog ? blog.comments.map((i) => i.id) : null
   const [commentText, setCommentText] = useState('')
-  // const [blog, setBlog] = useState('')
 
   const handleAddComment = (e) => {
     e.preventDefault()
@@ -59,9 +50,6 @@ const Blog = () => {
   }
 
   const handleDelete = (blogId) => {
-    // const confirmDelete = window.confirm(
-    //   `remove blog ${blog.title} by ${blog.author}?`
-    // )
     dispatch(toggleModal({ text: null }))
     dispatch(deleteBlog(blogId))
     dispatch(
@@ -131,14 +119,6 @@ const Blog = () => {
                   <Button type='submit'>add comment</Button>
                 </InputGroup>
               </Form>
-
-              {/* <form onSubmit={handleAddComment}>
-              <input
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-              />
-              <Button type='submit'>add comment</Button>
-            </form> */}
               <ul>
                 {blog.comments.map((comment) => (
                   <li key={comment.id}>{comment.text}</li>

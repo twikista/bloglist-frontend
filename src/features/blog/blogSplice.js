@@ -7,7 +7,6 @@ import {
   updateBlog,
   addComment,
 } from './blogThunk'
-// import blogs from '../../services/blogs'
 
 const blogSplice = createSlice({
   name: 'blogs',
@@ -20,20 +19,16 @@ const blogSplice = createSlice({
   extraReducers: {
     [getBlogs.pending]: (state) => {
       state.isLoading = true
-      // console.log(action)
     },
     [getBlogs.fulfilled]: (state, action) => {
       state.isLoading = false
       state.blogs = action.payload
-      // console.log(JSON.parse(JSON.stringify(state)))
     },
     [getBlogs.rejected]: (state) => {
       state.isLoading = false
-      // console.log(action.payload)
     },
     [getSingleBlog.pending]: (state) => {
       state.isLoading = true
-      // console.log(action)
     },
     [getSingleBlog.fulfilled]: (state, action) => {
       state.isLoading = false
@@ -43,7 +38,6 @@ const blogSplice = createSlice({
     [addBlog.fulfilled]: (state, action) => {
       const { newBlog, user } = action.payload
       state.blogs = state.blogs.concat({ ...newBlog, user })
-      // console.log(JSON.parse(JSON.stringify(state)))
     },
     [addBlog.rejected]: (state, action) => {
       state.error = action.payload
@@ -68,9 +62,6 @@ const blogSplice = createSlice({
         blog.id === action.payload.blog ? blogCommentedOn : blog
       )
     },
-    // [updateBlog.rejected]: (state, action) =>
-    //   // console.log(action)
-    // },
   },
 })
 

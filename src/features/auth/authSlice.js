@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { login } from './authThunk'
 import { setInitialAuthState } from '../../utils/utils'
-// console.log(setInitialAuthState())
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: setInitialAuthState(),

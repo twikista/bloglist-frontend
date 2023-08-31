@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import { getAllUsers } from '../features/users/userThunk'
-import UserItem from './UserItem'
+import UserItem from '../components/UserItem'
 
 const Users = () => {
   const { isLoading, users } = useSelector((state) => {
