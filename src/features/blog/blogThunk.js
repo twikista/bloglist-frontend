@@ -6,9 +6,21 @@ export const getBlogs = createAsyncThunk('blogs/getBlogs', async (thunkAPI) => {
     const blogs = await blogServices.getAll()
     return blogs
   } catch (error) {
-    return thunkAPI.rejectWithValue('data ftching failed')
+    return thunkAPI.rejectWithValue('data fetching failed')
   }
 })
+
+export const getSingleBlog = createAsyncThunk(
+  'blogs/getSingleBlog',
+  async (blogId, thunkAPI) => {
+    try {
+      const blogs = await blogServices.getSingle(blogId)
+      return blogs
+    } catch (error) {
+      return thunkAPI.rejectWithValue('data fetching failed')
+    }
+  }
+)
 
 export const addBlog = createAsyncThunk(
   'blogs/addBlog',
@@ -36,16 +48,30 @@ export const deleteBlog = createAsyncThunk(
 
 export const updateBlog = createAsyncThunk(
   'blogs/updateblog',
-  async ({ blogId, updatedBlogObject, user }, thunkAPI) => {
+  async ({ blogId, updatedBlogObject, user, comments }, thunkAPI) => {
     try {
       const returnedObject = await blogServices.updateBlog(
         blogId,
         updatedBlogObject
       )
-      return { returnedObject, user }
+      return { returnedObject, user, comments }
     } catch (error) {
       console.log(error)
       thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+export const addComment = createAsyncThunk(
+  'blogs/addComment',
+  async ({ id, commentObject }) => {
+    console.log(commentObject, id)
+    try {
+      const saveComment = await blogServices.createComment(id, commentObject)
+      console.log(commentObject)
+      return saveComment
+    } catch (error) {
+      console.log(error)
     }
   }
 )

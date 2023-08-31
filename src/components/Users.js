@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Table from 'react-bootstrap/Table'
 import { getAllUsers } from '../features/users/userThunk'
 import UserItem from './UserItem'
 
@@ -23,20 +24,19 @@ const Users = () => {
   }
 
   return (
-    <div>
-      <h2>Users</h2>
-      <table>
+    <div className='container' style={{ marginTop: '50px' }}>
+      <Table className='small-table'>
         <thead>
           <tr>
-            <th>user</th>
-            <th>blogs created</th>
+            <th>Users</th>
+            <th>Blogs Created</th>
           </tr>
         </thead>
         <tbody>
           {loading()}
           {users && users.map((user) => <UserItem key={user.id} user={user} />)}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }

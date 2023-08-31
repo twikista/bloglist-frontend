@@ -1,3 +1,4 @@
+
 .success {
     color: green;
     background: lightgrey;
@@ -20,4 +21,41 @@
   p{
     margin: 0;
     padding: 0;
+  }
+
+  .btn-short{
+    width: 100px;
+  }
+
+  .btn-wide{
+    width:120px
+  }
+
+  .input-width{
+    max-width:520px;
+  }
+
+  .small-table{
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .undecorated-link{
+    text-decoration: none;
+  }
+
+  .wrapper{
+    width:100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding:20px;
+  }
+
+  .flex-centered{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
   }

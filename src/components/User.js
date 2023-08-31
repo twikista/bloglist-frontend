@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types'
 
 const User = ({ user }) => {
-  console.log(user)
-  //   if (user) return null
   return (
     user && (
-      <div>
+      <div className='container small-table'>
         <h2>{user.name}</h2>
         <article>
           Added Blogs
@@ -16,7 +14,7 @@ const User = ({ user }) => {
               ))}
             </ul>
           ) : (
-            <h4>User curently has no blog listing</h4>
+            <p>user curently has no blog listing</p>
           )}
         </article>
       </div>

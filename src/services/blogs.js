@@ -17,6 +17,13 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
+const getSingle = (blogId) => {
+  console.log('got called')
+  console.log(blogId)
+  const request = axios.get(`${baseUrl}/${blogId}`)
+  return request.then((response) => response.data)
+}
+
 const createNewBlog = async (newNoteObject) => {
   const config = setConfig()
 
@@ -39,4 +46,20 @@ const deleteBlog = async (blogId) => {
   await axios.delete(`${baseUrl}/${blogId}`, config)
 }
 
-export default { getAll, setToken, createNewBlog, updateBlog, deleteBlog }
+const createComment = async (blogId, commentObject) => {
+  const response = await axios.post(
+    `${baseUrl}/${blogId}/comments`,
+    commentObject
+  )
+  return response.data
+}
+
+export default {
+  getAll,
+  getSingle,
+  setToken,
+  createNewBlog,
+  updateBlog,
+  deleteBlog,
+  createComment,
+}

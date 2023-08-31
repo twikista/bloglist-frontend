@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Button, Form } from 'react-bootstrap'
 import { addBlog } from '../features/blog/blogThunk'
 import {
   displayNotification,
@@ -15,6 +16,12 @@ const CreateBlogForm = ({ blogRef }) => {
   const [title, setTitile] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  // const [formData, setFormData] = useState({ title: '', author: '', url: '' })
+
+  // const onChangeHandler = (e) => {
+  //   const { name, value } = e.target
+  //   setFormData({ ...formData, [name]: value })
+  // }
 
   const createBlog = async (newBlogObject) => {
     try {
@@ -28,7 +35,7 @@ const CreateBlogForm = ({ blogRef }) => {
       //set notification message
       dispatch(
         displayNotification({
-          text: `a new blog '${returnedBlog.title}' by ${returnedBlog.author} has been added`,
+          text: `a new blog '${title}' by ${author} has been added`,
           variant: 'success',
         })
       )
@@ -52,17 +59,53 @@ const CreateBlogForm = ({ blogRef }) => {
 
   const handleSubmit = (e) => {
     console.log('got called')
+    // console.log(formData)
     e.preventDefault()
+    console.log(title, author, url)
     createBlog({ title, author, url })
     setTitile('')
     setAuthor('')
     setUrl('')
+    // setFormData({ title: '', author: '', url: '' })
   }
   return (
     <Togglable ref={blogRef} label='new blog'>
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <h2>Add new note</h2>
-        <div>
+        <Form.Group className='mb-3 small-table' controlId='title'>
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            size='lg'
+            value={title}
+            type='text'
+            onChange={(e) => {
+              setTitile(e.target.value)
+            }}
+          />
+        </Form.Group>
+        <Form.Group className='mb-3 small-table' controlId='author'>
+          <Form.Label>Author</Form.Label>
+          <Form.Control
+            size='lg'
+            value={author}
+            type='text'
+            onChange={(e) => {
+              setAuthor(e.target.value)
+            }}
+          />
+        </Form.Group>
+        <Form.Group className='mb-3 small-table' controlId='url'>
+          <Form.Label>URL</Form.Label>
+          <Form.Control
+            size='lg'
+            value={url}
+            type='text'
+            onChange={(e) => {
+              setUrl(e.target.value)
+            }}
+          />
+        </Form.Group>
+        {/* <div>
           <label>title</label>
           <input
             type='text'
@@ -91,11 +134,18 @@ const CreateBlogForm = ({ blogRef }) => {
             placeholder='enter blog url'
             id='url'
           />
-        </div>
-        <button type='submit' id='submit'>
+        </div> */}
+        <Button
+          className='small-table'
+          variant='success'
+          // size='sm'
+          type='submit'
+          id='submit'
+          // style={{ width: '100%', maxWidth: '520px' }}
+        >
           Add
-        </button>
-      </form>
+        </Button>
+      </Form>
     </Togglable>
   )
 }

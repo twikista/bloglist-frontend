@@ -62,13 +62,17 @@ const BlogItem = ({ blog }) => {
     marginBottom: 5,
   }
   return (
-    <div style={blogStyle}>
-      <Link to={`blogs/${blog.id}`}>
-        <span className='basic-details'>{`${title} by ${author}`}</span>
-        {/* <button onClick={toggleView}>{viewAll ? 'hide' : 'view'}</button> */}
-      </Link>
+    <tr key={blog.id} style={blogStyle}>
+      <td>
+        <Link to={`blogs/${blog.id}`} style={{ textDecoration: 'none' }}>
+          {title}
+        </Link>
+      </td>
+      {/* <button onClick={toggleView}>{viewAll ? 'hide' : 'view'}</button> */}
+
+      <td>{`${author}`}</td>
       {/* {viewAll && otherDetails()} */}
-    </div>
+    </tr>
   )
 }
 

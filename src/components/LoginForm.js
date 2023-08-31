@@ -6,6 +6,8 @@ import {
   removeNotification,
 } from '../features/notification/notification'
 import blogService from '../services/blogs'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -42,28 +44,45 @@ const LoginForm = () => {
     setPassword('')
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Log in to application</h1>
-      <div>
-        <label>username</label>
-        <input
+    <Form
+      onSubmit={handleSubmit}
+      className='container small-table flex-centered'
+    >
+      <h1 className='mb-5'>Log in to application</h1>
+      <Form.Group
+        className='mb-3'
+        controlId='username'
+        style={{ width: '100%', maxWidth: '400px' }}
+      >
+        <Form.Label>username</Form.Label>
+        <Form.Control
           type='text'
           value={username}
           onChange={({ target }) => setUsername(target.value)}
-          id='username'
+          size='lg'
         />
-      </div>
-      <div>
-        <label>password</label>
-        <input
+      </Form.Group>
+      <Form.Group
+        className='mb-3'
+        controlId='password'
+        style={{ width: '100%', maxWidth: '400px' }}
+      >
+        <Form.Label>password</Form.Label>
+        <Form.Control
           type='password'
           value={password}
           onChange={({ target }) => setPassword(target.value)}
-          id='password'
+          size='lg'
         />
-      </div>
-      <button type='submit'>login</button>
-    </form>
+      </Form.Group>
+      <Button
+        type='submit'
+        size='lg'
+        style={{ width: '100%', maxWidth: '400px' }}
+      >
+        login
+      </Button>
+    </Form>
   )
 }
 

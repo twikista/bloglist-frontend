@@ -1,10 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getBlogs, addBlog, deleteBlog, updateBlog } from './blogThunk'
+import {
+  getBlogs,
+  getSingleBlog,
+  addBlog,
+  deleteBlog,
+  updateBlog,
+  addComment,
+} from './blogThunk'
 // import blogs from '../../services/blogs'
 
 const blogSplice = createSlice({
   name: 'blogs',
   initialState: {
+    blog: '',
     blogs: [],
     isLoading: false,
   },
@@ -23,6 +31,15 @@ const blogSplice = createSlice({
       state.isLoading = false
       // console.log(action.payload)
     },
+    [getSingleBlog.pending]: (state) => {
+      state.isLoading = true
+      // console.log(action)
+    },
+    [getSingleBlog.fulfilled]: (state, action) => {
+      state.isLoading = false
+      console.log(action.payload)
+      state.blog = action.payload
+    },
     [addBlog.fulfilled]: (state, action) => {
       const { newBlog, user } = action.payload
       state.blogs = state.blogs.concat({ ...newBlog, user })
@@ -35,13 +52,23 @@ const blogSplice = createSlice({
       state.blogs = state.blogs.filter((blog) => blog.id !== action.payload)
     },
     [updateBlog.fulfilled]: (state, action) => {
-      // console.log(action.payload)
-      const { returnedObject, user } = action.payload
+      const { returnedObject, user, comments } = action.payload
       state.blogs = state.blogs.map((blog) =>
-        blog.id !== returnedObject.id ? blog : { ...returnedObject, user: user }
+        blog.id !== returnedObject.id
+          ? blog
+          : { ...returnedObject, user: user, comments }
       )
     },
-    // [updateBlog.rejected]: (state, action) => {
+    [addComment.fulfilled]: (state, action) => {
+      const blogCommentedOn = state.blogs.find(
+        (blog) => blog.id === action.payload.blog
+      )
+      blogCommentedOn.comments = blogCommentedOn.comments.concat(action.payload)
+      state.blogs = state.blogs.map((blog) =>
+        blog.id === action.payload.blog ? blogCommentedOn : blog
+      )
+    },
+    // [updateBlog.rejected]: (state, action) =>
     //   // console.log(action)
     // },
   },

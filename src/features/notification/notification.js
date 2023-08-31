@@ -2,10 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const notificationSlice = createSlice({
   name: 'notification',
-  initialState: { text: '', variant: '' },
+  initialState: {
+    text: '',
+    variant: '',
+    modal: { show: false, text: null },
+  },
   reducers: {
     displayNotification: (state, action) => {
-      console.log(action.payload)
       state.text = action.payload.text
       state.variant = action.payload.variant
     },
@@ -13,9 +16,13 @@ const notificationSlice = createSlice({
       state.text = ''
       state.variant = ''
     },
+    toggleModal: (state, action) => {
+      state.modal.text = action.payload.text
+      state.modal.show = !state.modal.show
+    },
   },
 })
 
-export const { displayNotification, removeNotification } =
+export const { displayNotification, removeNotification, toggleModal } =
   notificationSlice.actions
 export default notificationSlice.reducer

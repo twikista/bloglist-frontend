@@ -1,4 +1,5 @@
 import React, { useState, useImperativeHandle } from 'react'
+import Button from 'react-bootstrap/Button'
 
 const Togglable = React.forwardRef((props, refs) => {
   //   const { show, setShow } = props;
@@ -13,15 +14,27 @@ const Togglable = React.forwardRef((props, refs) => {
     return { toggleFormVisibility }
   })
   return (
-    <div>
+    <div className='small-table'>
       <div style={showForm}>
-        <button onClick={toggleFormVisibility} id='form-toggle'>
+        <Button
+          className='btn-wide'
+          variant='primary'
+          onClick={toggleFormVisibility}
+          id='form-toggle'
+        >
           {props.label}
-        </button>
+        </Button>
       </div>
       <div style={hideForm}>
         {props.children}
-        <button onClick={toggleFormVisibility}>cancel</button>
+        <Button
+          className='small-table mt-3'
+          variant='primary'
+          // size='sm'
+          onClick={toggleFormVisibility}
+        >
+          cancel
+        </Button>
       </div>
     </div>
   )
